@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.10"
+      - run: uv sync --group dev
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy
+
+  test:
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        numpy: ["latest"]
+        experimental: [false]
+        include:
+          # Oldest supported numpy on the oldest supported Python.
+          - python-version: "3.10"
+            numpy: "1.26"
+            experimental: false
+          # Next Python; informational only.
+          - python-version: "3.14"
+            numpy: "latest"
+            experimental: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: uv sync --group dev
+      - if: matrix.numpy != 'latest'
+        run: uv pip install "numpy==${{ matrix.numpy }}.*"
+      - run: uv run pytest --cov --cov-report=term-missing

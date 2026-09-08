@@ -1,0 +1,54 @@
+site_name: york
+site_description: Straight-line fitting when both x and y have measurement uncertainty (York 2004), built for instrument intercomparison.
+site_url: https://quant-aq.github.io/york
+repo_url: https://github.com/quant-aq/york
+repo_name: quant-aq/york
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: blue grey
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue grey
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Overview: index.md
+  - Guide: guide.md
+  - "Sensor vs reference: York or OLS?": sensor-vs-reference.md
+  - Theory: theory.md
+  - API reference: api.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: numpy
+            show_source: false
+            show_root_heading: true
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: [.]
+      check_paths: true

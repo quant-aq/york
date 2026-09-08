@@ -1,0 +1,97 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "york"
+version = "0.1.0"
+description = "Straight-line fitting when both x and y have measurement uncertainty (York 2004), built for instrument intercomparison."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "David H. Hagan", email = "david.hagan@quant-aq.com" }]
+keywords = [
+  "regression",
+  "errors-in-variables",
+  "york-regression",
+  "method-comparison",
+  "calibration",
+  "air-quality",
+  "atmospheric-science",
+  "total-least-squares",
+  "deming",
+  "orthogonal-regression",
+  "numpy",
+  "scipy",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Atmospheric Science",
+  "Topic :: Scientific/Engineering :: Chemistry",
+  "Typing :: Typed",
+]
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+pandas = ["pandas>=2.0"]
+
+[project.urls]
+Homepage = "https://github.com/quant-aq/york"
+Repository = "https://github.com/quant-aq/york"
+Documentation = "https://quant-aq.github.io/york"
+Changelog = "https://github.com/quant-aq/york/blob/main/CHANGELOG.md"
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "pytest-cov>=5",
+  "hypothesis>=6.100",
+  "scipy>=1.10",
+  "matplotlib>=3.7",
+  "scikit-learn>=1.6",
+  "ruff>=0.6",
+  "mypy>=1.10",
+]
+docs = ["mkdocs-material>=9.5", "mkdocstrings[python]>=0.25"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/york"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/york", "tests", "examples", "SPEC.md", "README.md", "LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = ["slow: property-based tests with large example counts"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "NPY", "RUF"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src/york"]
+
+[[tool.mypy.overrides]]
+module = ["matplotlib.*", "pandas.*", "sklearn.*"]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["york"]
+branch = true
