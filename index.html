@@ -1,0 +1,1128 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Straight-line fitting when both x and y have measurement uncertainty (York 2004), built for instrument intercomparison.">
+      
+      
+      
+        <link rel="canonical" href="https://quant-aq.github.io/york/">
+      
+      
+      
+        <link rel="next" href="guide/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>york</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#york" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="york" class="md-header__button md-logo" aria-label="york" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            york
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/quant-aq/york" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    quant-aq/york
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="york" class="md-nav__button md-logo" aria-label="york" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    york
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/quant-aq/york" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    quant-aq/york
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-not-ols" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why not OLS?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-uncertainties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom uncertainties
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-you-do-not-know-the-uncertainties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If you do not know the uncertainties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-get-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you get back
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What you get back">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plotting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scikit-learn-style-estimator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        scikit-learn-style estimator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal-versus-external-uncertainties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Internal versus external uncertainties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagnostics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sensor-vs-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensor vs reference: York or OLS?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-not-ols" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why not OLS?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Error models
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Error models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-uncertainties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom uncertainties
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-you-do-not-know-the-uncertainties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If you do not know the uncertainties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-get-back" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you get back
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What you get back">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#plotting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plotting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scikit-learn-style-estimator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        scikit-learn-style estimator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal-versus-external-uncertainties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Internal versus external uncertainties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagnostics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="york">york<a class="headerlink" href="#york" title="Permanent link">&para;</a></h1>
+<p>Straight-line fitting when <strong>both</strong> x and y have measurement uncertainty
+(York 2004), built for instrument intercomparison.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">york</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">york.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstrumentSpec</span>
+
+<span class="c1"># Reference monitor: ±(0.5 µg/m³ + 5% of reading). Candidate: ±(1.0 + 10%).</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">york</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">reference</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span>
+    <span class="n">sx</span><span class="o">=</span><span class="n">InstrumentSpec</span><span class="p">(</span><span class="n">absolute</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="mf">0.05</span><span class="p">),</span>
+    <span class="n">sy</span><span class="o">=</span><span class="n">InstrumentSpec</span><span class="p">(</span><span class="n">absolute</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="mf">0.10</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="c1"># YorkFit(y = 0.94(±0.02)x + 1.3(±0.6), MSWD=1.1, n=847)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">test_slope</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>       <span class="c1"># is the slope different from 1?</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">test_intercept</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>   <span class="c1"># is the intercept different from 0?</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</code></pre></div>
+<p>Ordinary least squares assumes x is exact. When you compare two instruments
+that both have real uncertainty, that assumption biases the slope toward
+zero and understates the intercept. York's method is the maximum-likelihood
+straight line when every point has its own uncertainty in both variables,
+optionally correlated. Orthogonal, Deming, and weighted least squares are
+all special cases of it.</p>
+<p><code>york</code> is aimed at the questions a method-comparison study actually asks:
+is the slope 1, is the intercept 0, and is the scatter consistent with the
+stated instrument precision?</p>
+<h2 id="why-not-ols">Why not OLS?<a class="headerlink" href="#why-not-ols" title="Permanent link">&para;</a></h2>
+<p>A low-cost PM2.5 sensor co-located with a beta-attenuation monitor for a
+month, simulated so the truth is known. The sensor reads 35 percent high.
+Hourly reference noise of 2.4 µg/m³ against a concentration spread of about
+6 µg/m³ is enough to pull OLS well off:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Slope</th>
+<th>Intercept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Truth</td>
+<td>1.35</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>OLS, sensor on reference</td>
+<td>1.17</td>
+<td>2.8</td>
+</tr>
+<tr>
+<td>OLS, reference on sensor, inverted</td>
+<td>1.49</td>
+<td>−0.6</td>
+</tr>
+<tr>
+<td>York, with each instrument's precision</td>
+<td>1.37 ± 0.03</td>
+<td>0.6</td>
+</tr>
+</tbody>
+</table>
+<p>OLS assumes the reference is exact. When it isn't, the slope is attenuated
+by the reliability ratio <code>var(true x) / (var(true x) + σx²)</code>, a bias that
+more data makes more precisely wrong. York treats both instruments as
+imperfect and recovers the line. OLS remains the right tool when the goal
+is to <em>predict</em> reference values from future sensor readings.</p>
+<blockquote>
+<p><strong>EPA guidance recommends OLS.</strong> The <em>Air Sensor Guidebook</em> and the NSIM
+performance-targets reports evaluate sensors by OLS of sensor against a
+co-located FRM/FEM monitor, with PM2.5 targets of slope 1.0 ± 0.35,
+intercept within ±5 µg/m³ and R² ≥ 0.70 on 24-hour averages. That is
+defensible for what it is: at daily averaging the reference noise is
+small relative to the spread of the data, so attenuation is a few
+percent, and the targets are loose screening criteria that need no
+uncertainty model. It stops being defensible on hourly data, at clean
+sites, or between instruments of similar precision, and the OLS slope
+should never be reported as the sensor's response. Compute both: OLS
+where the protocol asks, York for what the sensor actually does.</p>
+</blockquote>
+<p><a href="https://quant-aq.github.io/york/sensor-vs-reference/">Sensor versus reference: York or OLS?</a>
+walks through the example with sources, and
+<a href="https://github.com/quant-aq/york/blob/main/examples/sensor_vs_reference.py"><code>examples/sensor_vs_reference.py</code></a> reproduces it.</p>
+<h2 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>pip install york
+</code></pre></div>
+<p>The only runtime dependency is numpy. Optional extras: <code>york[plot]</code> for
+matplotlib, <code>york[pandas]</code> for pandas helpers.</p>
+<h2 id="error-models">Error models<a class="headerlink" href="#error-models" title="Permanent link">&para;</a></h2>
+<p>Uncertainties are objects, not strings. <code>sx</code> and <code>sy</code> are specified
+independently because two instruments rarely share an error structure.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Sigma</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>InstrumentSpec(absolute, relative)</code></td>
+<td><code>sqrt(a² + (b·x)²)</code></td>
+<td>You have a manufacturer spec. Start here.</td>
+</tr>
+<tr>
+<td><code>Replicate(sd)</code></td>
+<td>measured SD</td>
+<td>Averaged data already carries a within-window SD. Prefer this when available.</td>
+</tr>
+<tr>
+<td><code>Poisson(interval)</code></td>
+<td><code>sqrt(N) / t</code></td>
+<td>Counting instruments (CPCs).</td>
+</tr>
+<tr>
+<td><code>Relative(b)</code></td>
+<td><code>b·|x|</code></td>
+<td>Fractional precision only. Set <code>min_sigma</code>.</td>
+</tr>
+<tr>
+<td><code>Absolute(a)</code></td>
+<td><code>a</code></td>
+<td>Fixed precision.</td>
+</tr>
+<tr>
+<td><code>RollingStd(window)</code></td>
+<td>local SD, global fallback</td>
+<td>Unknown error structure. Last resort.</td>
+</tr>
+</tbody>
+</table>
+<p><code>sx</code> and <code>sy</code> also accept a scalar or a per-point array. Every model takes a
+<code>min_sigma</code> floor to stop relative errors collapsing to zero near the
+detection limit; <code>fit</code> warns when a non-trivial fraction of points sit on
+the floor.</p>
+<p><code>york.errors.REFERENCE_SPECS</code> holds starting-point specs for a few common
+reference monitors. They are transcribed from datasheets, are not
+authoritative, and should be overridden with your own numbers.</p>
+<h3 id="custom-uncertainties">Custom uncertainties<a class="headerlink" href="#custom-uncertainties" title="Permanent link">&para;</a></h3>
+<p>The built-in models cover the common cases, but you are never limited to
+them. There are three ways to supply your own.</p>
+<p><strong>A per-point array.</strong> Compute sigma however you like and pass the array.
+This is the simplest escape hatch and needs no library machinery:</p>
+<div class="highlight"><pre><span></span><code><span class="n">sigma_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">0.5</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.05</span> <span class="o">*</span> <span class="n">reference</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.02</span> <span class="o">*</span> <span class="n">rh</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">york</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">sx</span><span class="o">=</span><span class="n">sigma_ref</span><span class="p">,</span> <span class="n">sy</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>A scalar.</strong> A plain number is a constant absolute uncertainty:</p>
+<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">york</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">sx</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">sy</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Your own model class.</strong> Subclass <code>ErrorModel</code>, implement <code>_sigma</code> and
+<code>describe</code>, and the result works everywhere a built-in model does: the
+<code>min_sigma</code> floor is applied for you, the detection-limit warning fires when
+too many points hit it, and <code>describe()</code> is printed in <code>summary()</code> so the
+fit records how its weights were chosen.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">york.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErrorModel</span>
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HumidityDependent</span><span class="p">(</span><span class="n">ErrorModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Sigma grows with relative humidity: base + per_rh * RH."""</span>
+
+    <span class="n">base</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">per_rh</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">rh</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="n">min_sigma</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_sigma</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">per_rh</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rh</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"HumidityDependent(±</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">per_rh</span><span class="si">}</span><span class="s2"> per %RH)"</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">york</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">reference</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span>
+    <span class="n">sx</span><span class="o">=</span><span class="n">HumidityDependent</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">per_rh</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">rh</span><span class="o">=</span><span class="n">rh</span><span class="p">),</span>
+    <span class="n">sy</span><span class="o">=</span><span class="n">InstrumentSpec</span><span class="p">(</span><span class="n">absolute</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="mf">0.10</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><code>_sigma</code> receives the data as a float array and must return something
+broadcastable to the same shape. Anything beyond that, such as parameter
+validation in <code>__post_init__</code> or a length check against side data like <code>rh</code>
+above, is up to you. Models are ordinary Python objects, so they can be
+built from configuration, stored, and reused across fits.</p>
+<p>If a custom sigma can reach zero, set <code>min_sigma</code> or <code>fit</code> will raise
+rather than silently give those points infinite weight.</p>
+<h3 id="if-you-do-not-know-the-uncertainties">If you do not know the uncertainties<a class="headerlink" href="#if-you-do-not-know-the-uncertainties" title="Permanent link">&para;</a></h3>
+<p>Calling <code>fit(x, y)</code> with no <code>sx</code> or <code>sy</code> estimates the <em>ratio</em> of the two
+sigmas from local variability and scales both so that MSWD = 1. The slope
+and its uncertainty remain meaningful because they depend only on the ratio.
+What is lost is any goodness-of-fit test, because MSWD was forced to 1. The
+result carries <code>mswd_is_constrained=True</code>, a <code>UserWarning</code> says exactly what
+was done, and <code>summary()</code> refuses to present the MSWD as evidence of fit.</p>
+<p>Giving one sigma but not the other is ambiguous and raises <code>ValueError</code>.</p>
+<h2 id="what-you-get-back">What you get back<a class="headerlink" href="#what-you-get-back" title="Permanent link">&para;</a></h2>
+<p><code>YorkFit</code> is a frozen dataclass with <code>slope</code>, <code>intercept</code>, their standard
+errors, <code>mswd</code>, <code>chi2</code>, <code>chi2_p</code>, <code>n_eff</code>, the error model description, and
+any active warnings. Methods:</p>
+<ul>
+<li><code>test_slope(value=1.0, level=0.95)</code> and <code>test_intercept(value=0.0, level=0.95)</code>
+  return the t statistic, two-sided p-value, and confidence interval.</li>
+<li><code>predict(x)</code>, <code>confidence_band(x, level)</code>, and <code>residuals()</code> (weighted, so
+  their squares sum to <code>chi2</code>).</li>
+<li><code>summary()</code> prints all of the above plus the error model and warnings.</li>
+</ul>
+<h3 id="plotting">Plotting<a class="headerlink" href="#plotting" title="Permanent link">&para;</a></h3>
+<p>With the <code>[plot]</code> extra installed, <code>result.plot()</code> draws the data with
+error bars, the fitted line and its confidence band, the 1:1 line, and a
+residual panel underneath. <code>york.plotting.plot_fit</code> and
+<code>york.plotting.plot_residuals</code> draw the panels separately onto any
+matplotlib axes you give them.</p>
+<div class="highlight"><pre><span></span><code><span class="n">fig</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"reference PM2.5 (µg/m³)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"candidate PM2.5 (µg/m³)"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">"intercomparison.png"</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="scikit-learn-style-estimator">scikit-learn-style estimator<a class="headerlink" href="#scikit-learn-style-estimator" title="Permanent link">&para;</a></h3>
+<p><code>YorkRegressor</code> wraps <code>fit</code> in the <code>fit</code> / <code>predict</code> / <code>score</code> /
+<code>get_params</code> / <code>set_params</code> protocol, so it works with <code>cross_val_score</code>,
+<code>GridSearchCV</code> and pipelines. scikit-learn is not a dependency; the
+protocol is implemented by hand.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">york</span><span class="w"> </span><span class="kn">import</span> <span class="n">YorkRegressor</span>
+
+<span class="n">est</span> <span class="o">=</span> <span class="n">YorkRegressor</span><span class="p">(</span><span class="n">sx</span><span class="o">=</span><span class="n">InstrumentSpec</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span> <span class="n">sy</span><span class="o">=</span><span class="n">InstrumentSpec</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">))</span>
+<span class="n">est</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">candidate</span><span class="p">)</span>
+<span class="n">est</span><span class="o">.</span><span class="n">slope_</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">slope_err_</span><span class="p">,</span> <span class="n">est</span><span class="o">.</span><span class="n">mswd_</span>
+<span class="n">est</span><span class="o">.</span><span class="n">result_</span><span class="o">.</span><span class="n">test_slope</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>     <span class="c1"># the full YorkFit is on result_</span>
+</code></pre></div>
+<p><code>score</code> is R², which is there for scikit-learn's benefit rather than yours;
+the method-comparison answers are on <code>result_</code>. One caution: a transformer
+in front of the estimator changes the units of <code>X</code> while <code>sx</code> stays in the
+original units, so a <code>StandardScaler</code> in a pipeline silently makes the x
+uncertainties wrong unless you rescale <code>sx</code> to match.</p>
+<h3 id="internal-versus-external-uncertainties">Internal versus external uncertainties<a class="headerlink" href="#internal-versus-external-uncertainties" title="Permanent link">&para;</a></h3>
+<p>By default the reported parameter uncertainties are the <em>internal</em> ones
+implied by your stated sigmas. If MSWD is well above 1 your sigmas are too
+small or the model is wrong. Pass <code>scale_errors=True</code> to multiply the
+uncertainties by <code>sqrt(MSWD)</code>, which is what <code>scipy.odr</code> reports. The choice
+is explicit because the two answer different questions.</p>
+<h2 id="diagnostics">Diagnostics<a class="headerlink" href="#diagnostics" title="Permanent link">&para;</a></h2>
+<p>Hourly air-quality series are strongly autocorrelated, so the effective
+number of independent points is well below n. <code>fit</code> computes the lag-1
+autocorrelation of the weighted residuals, reports <code>n_eff</code>, and warns when
+it falls below half of n and the autocorrelation is statistically
+significant. Reported uncertainties assume independent points; treat them
+as lower bounds when this warning fires.</p>
+<h2 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The Pearson-York ten-point benchmark reproduces slope −0.480533 and
+  intercept 5.479910 with the published standard errors, both internal and
+  MSWD-scaled.</li>
+<li>Limiting cases are checked against independent implementations: OLS in
+  both directions, orthogonal regression via SVD, Deming via its closed form,
+  and heteroscedastic data against <code>scipy.odr</code>.</li>
+<li>Swapping x and y gives the reciprocal slope and the correctly transformed
+  slope error to machine precision, including with correlated errors.</li>
+<li>Hypothesis property tests cover affine equivariance, convergence, and
+  sigma rescaling.</li>
+<li>The hand-rolled t and chi-square distribution functions agree with scipy
+  to 1e-10.</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>York, D., Evensen, N. M., Martínez, M. L., De Basabe Delgado, J. (2004).
+  Unified equations for the slope, intercept, and standard errors of the best
+  straight line. <em>American Journal of Physics</em> 72(3). doi:10.1119/1.1632486</li>
+<li>Wehr, R. &amp; Saleska, S. R. (2017). The long-solved problem of the best-fit
+  straight line: application to isotopic mixing lines. <em>Biogeosciences</em> 14(1).</li>
+</ul>
+<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
+<p>MIT</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.sections", "navigation.top", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1020 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Straight-line fitting when both x and y have measurement uncertainty (York 2004), built for instrument intercomparison.">
+      
+      
+      
+        <link rel="canonical" href="https://quant-aq.github.io/york/sensor-vs-reference/">
+      
+      
+        <link rel="prev" href="../guide/">
+      
+      
+        <link rel="next" href="../theory/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Sensor vs reference: York or OLS? - york</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sensor-versus-reference-york-or-ols" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="york" class="md-header__button md-logo" aria-label="york" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            york
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Sensor vs reference: York or OLS?
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/quant-aq/york" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    quant-aq/york
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="york" class="md-nav__button md-logo" aria-label="york" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    york
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/quant-aq/york" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    quant-aq/york
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensor vs reference: York or OLS?
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensor vs reference: York or OLS?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-comes-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What comes out
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-ols-gets-the-slope-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why OLS gets the slope wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-same-month-as-daily-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The same month as daily means
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-epa-guidance-says-and-whether-it-is-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What EPA guidance says, and whether it is right
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-which" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to use which
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-note-on-hourly-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A note on hourly data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-comes-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What comes out
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-ols-gets-the-slope-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why OLS gets the slope wrong
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-same-month-as-daily-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The same month as daily means
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-epa-guidance-says-and-whether-it-is-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What EPA guidance says, and whether it is right
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-to-use-which" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When to use which
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-note-on-hourly-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A note on hourly data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="sensor-versus-reference-york-or-ols">Sensor versus reference: York or OLS?<a class="headerlink" href="#sensor-versus-reference-york-or-ols" title="Permanent link">&para;</a></h1>
+<p>The case this library exists for: a low-cost air sensor sits next to a
+regulatory monitor for a month, and you want to know how the sensor
+responds relative to the reference. Is the slope 1? Is there an offset? Is
+the scatter what the two instruments' precisions predict?</p>
+<p>The reflex is ordinary least squares of sensor on reference. This page
+shows, with a simulation where the truth is known, why that gives the wrong
+slope whenever the reference has appreciable noise, and when OLS is still
+the right choice.</p>
+<p>The full script is <a href="https://github.com/quant-aq/york/blob/main/examples/sensor_vs_reference.py"><code>examples/sensor_vs_reference.py</code></a>.
+Everything below comes from running it.</p>
+<h2 id="the-setup">The setup<a class="headerlink" href="#the-setup" title="Permanent link">&para;</a></h2>
+<p>A month of hourly data, simulated so the true relationship is known:</p>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>True PM2.5</td>
+<td>median 9 µg/m³, SD about 6, hour-to-hour autocorrelation 0.9</td>
+<td>typical US urban hourly series</td>
+</tr>
+<tr>
+<td>Reference monitor noise</td>
+<td>2.4 µg/m³ hourly, one sigma</td>
+<td>BAM-1020 hourly detection limit of 4.8 µg/m³ at two sigma; verify against the current datasheet</td>
+</tr>
+<tr>
+<td>Sensor response</td>
+<td>sensor = 1.0 + 1.35 × true</td>
+<td>uncorrected optical sensors commonly over-read relative to FEM monitors (Barkjohn et al., 2021)</td>
+</tr>
+<tr>
+<td>Sensor precision</td>
+<td>±(1.0 µg/m³ + 10% of reading)</td>
+<td><code>InstrumentSpec(absolute=1.0, relative=0.10)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Three fits of sensor against reference:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">york</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">york.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">InstrumentSpec</span>
+
+<span class="n">ols_slope</span><span class="p">,</span> <span class="n">ols_intercept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">sensor</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">york</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">reference</span><span class="p">,</span> <span class="n">sensor</span><span class="p">,</span>
+    <span class="n">sx</span><span class="o">=</span><span class="mf">2.4</span><span class="p">,</span>                                       <span class="c1"># BAM hourly, one sigma</span>
+    <span class="n">sy</span><span class="o">=</span><span class="n">InstrumentSpec</span><span class="p">(</span><span class="n">absolute</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="mf">0.10</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="what-comes-out">What comes out<a class="headerlink" href="#what-comes-out" title="Permanent link">&para;</a></h2>
+<p><img alt="Hourly sensor vs reference: York recovers the true line, OLS does not" src="../img/sensor_vs_reference.png" /></p>
+<p>Hourly data, n = 720:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Slope</th>
+<th>Intercept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Truth</td>
+<td>1.350</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>OLS, sensor on reference</td>
+<td>1.166</td>
+<td>2.79</td>
+</tr>
+<tr>
+<td>OLS, reference on sensor, inverted</td>
+<td>1.492</td>
+<td>−0.60</td>
+</tr>
+<tr>
+<td><strong>York</strong></td>
+<td><strong>1.365 ± 0.028</strong></td>
+<td><strong>0.62</strong></td>
+</tr>
+</tbody>
+</table>
+<p>York's MSWD is 1.05: the scatter is consistent with the stated precisions.
+Its test of slope = 1 gives p below 1e-30, as it should for a sensor
+reading 35 percent high.</p>
+<p>OLS is 14 percent low on the slope and compensates with an intercept almost
+three times too large. Regressing the other way round and inverting is 10
+percent high. The two OLS lines bracket the truth, and neither is it.</p>
+<h2 id="why-ols-gets-the-slope-wrong">Why OLS gets the slope wrong<a class="headerlink" href="#why-ols-gets-the-slope-wrong" title="Permanent link">&para;</a></h2>
+<p>OLS assumes x is known exactly. When x carries random error with variance
+<code>σx²</code>, the fitted slope is attenuated by the <em>reliability ratio</em></p>
+<div class="highlight"><pre><span></span><code>λ = var(true x) / (var(true x) + σx²)
+</code></pre></div>
+<p>so <code>slope_OLS ≈ λ × slope_true</code>. This is regression dilution, known since
+the 1870s and worked out in full by Fuller (1987); Frost and Thompson (2000)
+and Hutcheon et al. (2010) are readable treatments. It is a bias, not
+noise: more data makes the estimate more precisely wrong.</p>
+<p>Here <code>var(true)</code> is 32 (µg/m³)² and the hourly BAM noise variance is 5.8,
+giving λ = 0.85 and a predicted OLS slope of 1.15. The fit gave 1.17, the
+difference being sampling noise. The intercept is pulled up to keep the
+line through the centroid.</p>
+<p>The clinical chemistry literature reached this conclusion decades ago for
+exactly this problem, comparing one assay against another when both are
+imprecise (Cornbleet and Gochman, 1979; Linnet, 1993). Deming regression
+(Deming, 1943) is their standard remedy; York's method is the general
+weighted case of it, and Cantrell (2008) reviews the same family of fits
+for atmospheric chemistry.</p>
+<h2 id="the-same-month-as-daily-means">The same month as daily means<a class="headerlink" href="#the-same-month-as-daily-means" title="Permanent link">&para;</a></h2>
+<p>Averaging 24 hours divides both instruments' random precision by
+<code>sqrt(24)</code>. The reference noise drops to 0.5 µg/m³, the reliability ratio
+rises to 0.98, and the two methods converge:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Slope</th>
+<th>Intercept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Truth</td>
+<td>1.350</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>OLS, sensor on reference</td>
+<td>1.331</td>
+<td>1.07</td>
+</tr>
+<tr>
+<td>OLS, reference on sensor, inverted</td>
+<td>1.348</td>
+<td>0.90</td>
+</tr>
+<tr>
+<td><strong>York</strong></td>
+<td><strong>1.341 ± 0.035</strong></td>
+<td><strong>0.96</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Two things to take from this:</p>
+<ul>
+<li><strong>Averaging shrinks precision, not bias.</strong> The sensor still reads 35
+  percent high. York's answer barely moves between hourly and daily; OLS
+  moves because its bias shrank.</li>
+<li><strong>Sigmas must match the averaging interval.</strong> The script scales both
+  instruments' precision by <code>sqrt(24)</code> for the daily fit. Feeding hourly
+  sigmas to daily means gave an MSWD of 0.11 on the first run, the library's
+  way of saying the stated uncertainties were far too large. York cannot
+  save you from a wrong error model, but MSWD will tell you it is wrong.</li>
+</ul>
+<h2 id="what-epa-guidance-says-and-whether-it-is-right">What EPA guidance says, and whether it is right<a class="headerlink" href="#what-epa-guidance-says-and-whether-it-is-right" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">EPA recommends OLS. For its purpose, that is defensible.</p>
+<p>The US EPA's <em>Air Sensor Guidebook</em> (Williams et al., 2014), its
+successor the <em>Enhanced Air Sensor Guidebook</em> (US EPA, 2022), and the
+performance-targets reports for non-regulatory supplemental and
+informational monitoring (NSIM) of PM2.5 and ozone sensors (Duvall et
+al., 2021a, 2021b) all evaluate a sensor by ordinary least squares of
+sensor against a co-located FRM or FEM monitor, reporting slope,
+intercept and R² against target ranges. For PM2.5 the base-testing
+targets are a slope of 1.0 ± 0.35, an intercept within ±5 µg/m³, and
+R² ≥ 0.70, computed on 24-hour averages.</p>
+<p><strong>Why that holds up for the protocol it was written for:</strong></p>
+<ul>
+<li><strong>It uses daily averages against a FEM.</strong> At 24-hour averaging a
+  beta-attenuation monitor's noise is well under 1 µg/m³, while the
+  spread of daily means across a 30-day test is usually several µg/m³.
+  The reliability ratio is close to 1 and OLS attenuation is a few
+  percent, far inside a ±0.35 slope tolerance. The daily-means table
+  above is exactly this situation: OLS and York agree within their
+  uncertainties.</li>
+<li><strong>It is a screening test, not a characterisation.</strong> The targets are
+  deliberately loose pass/fail criteria for non-regulatory use. A few
+  percent of bias in the statistic does not change the outcome.</li>
+<li><strong>It needs no uncertainty model.</strong> OLS is reproducible across labs
+  and sensor types without anyone having to agree on sigmas, which
+  matters for a standard protocol.</li>
+<li><strong>The Guidebook also wants a correction to apply to future sensor
+  data.</strong> For that job OLS of reference on sensor is the right tool,
+  because the attenuation is the shrinkage a predictor should have.</li>
+</ul>
+<p><strong>Where it stops holding up:</strong></p>
+<ul>
+<li><strong>Hourly data.</strong> Hourly BAM noise at typical US concentrations gives
+  a reliability ratio of 0.8 to 0.9, so OLS understates the slope by
+  10 to 20 percent and overstates the intercept, as the hourly table
+  above shows. The NSIM targets are defined on daily averages; applying
+  the same OLS habit to hourly co-location is where things go wrong.</li>
+<li><strong>Low-concentration sites and quiet months.</strong> The attenuation
+  depends on the spread of concentrations during the test, not on the
+  sensor. The same sensor gets a lower OLS slope at a clean site than
+  at a polluted one. A York slope with a correct error model does not
+  depend on where or when you tested.</li>
+<li><strong>Two instruments of similar precision.</strong> Sensor against sensor, or
+  a mid-cost monitor against a FEM at low concentrations. OLS is then
+  biased in both directions and the choice of axis changes the answer.</li>
+<li><strong>Reading the OLS slope as the sensor's response.</strong> The NSIM slope is
+  a test statistic under a fixed protocol. It is not a property of the
+  sensor, and reporting it as "the sensor reads 17 percent high" when
+  York says 35 is the mistake this library exists to prevent.</li>
+</ul>
+<p><strong>Practical advice.</strong> Compute both. Report OLS slope, intercept and R²
+where a protocol asks for them, on the averaging interval it
+specifies. Report the York slope and intercept with their
+uncertainties, the MSWD, and the slope = 1 test as the sensor's actual
+response. York does not compute R² by design; take it from the OLS fit.</p>
+</div>
+<h2 id="when-to-use-which">When to use which<a class="headerlink" href="#when-to-use-which" title="Permanent link">&para;</a></h2>
+<p><strong>Use York when the question is "how does the sensor respond?"</strong> The
+slope and intercept as properties of the sensor, the test of slope = 1,
+and the MSWD check that the two instruments' precisions explain the
+scatter. This is the method-comparison question, and it needs a method that
+treats both instruments as imperfect. The effect is large whenever the
+reference noise is not small compared with the spread of concentrations
+across the study: hourly beta-attenuation data at a clean site is the
+canonical case, and comparing two low-cost sensors to each other is worse.</p>
+<p><strong>Use OLS when the question is "what will the reference read, given this
+sensor value?"</strong> That is calibration for deployment, and the future sensor
+readings you will apply it to carry the same noise as the ones you fit on.
+OLS of reference on sensor is the best linear predictor for that job, and
+its attenuation is exactly the shrinkage a predictor should have (Frost and
+Thompson, 2000). Correcting it with York would over-correct.</p>
+<p><strong>Use OLS when a protocol specifies it, and report York alongside.</strong> The
+EPA guidance above defines slope, intercept and R² by OLS. Report those
+numbers for that purpose, on the averaging interval the protocol names.
+Then report the York slope so nobody mistakes an attenuated OLS slope for
+the sensor's response: in the hourly example above, OLS puts the sensor at
+1.17, comfortably inside the target of 1.0 ± 0.35, while the sensor
+actually reads 1.35.</p>
+<p><strong>Either is fine when the reference is far more precise than the
+spread of the data.</strong> Daily FRM filters against a month of varied
+concentrations have a reliability ratio near 1, and the methods agree
+within their uncertainties. York still gives you MSWD and the hypothesis
+tests, so there is little reason not to use it.</p>
+<h2 id="a-note-on-hourly-data">A note on hourly data<a class="headerlink" href="#a-note-on-hourly-data" title="Permanent link">&para;</a></h2>
+<p>The residuals in this simulation are white, because the noise was
+generated that way. Real sensor residuals are not: they track humidity and
+temperature, which are autocorrelated over hours. <code>fit</code> estimates the
+effective sample size from the residuals and warns when it drops well below
+n. When that fires, the uncertainties and p-values above are optimistic,
+and the warning is the library telling you so rather than letting the
+comparison be oversold.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Barkjohn, K. K., Gantt, B., Clements, A. L. (2021). Development and
+  application of a United States-wide correction for PM2.5 data collected
+  with the PurpleAir sensor. <em>Atmospheric Measurement Techniques</em> 14,
+  4617–4637. doi:10.5194/amt-14-4617-2021</li>
+<li>Cantrell, C. A. (2008). Technical note: Review of methods for linear
+  least-squares fitting of data and application to atmospheric chemistry
+  problems. <em>Atmospheric Chemistry and Physics</em> 8, 5477–5487.
+  doi:10.5194/acp-8-5477-2008</li>
+<li>Cornbleet, P. J., Gochman, N. (1979). Incorrect least-squares regression
+  coefficients in method-comparison analysis. <em>Clinical Chemistry</em> 25(3),
+  432–438.</li>
+<li>Deming, W. E. (1943). <em>Statistical Adjustment of Data</em>. Wiley.</li>
+<li>Duvall, R. M., Clements, A. L., Hagler, G., et al. (2021a). Performance
+  Testing Protocols, Metrics, and Target Values for Fine Particulate Matter
+  Air Sensors: Use in Ambient, Outdoor, Fixed Site, Non-Regulatory
+  Supplemental and Informational Monitoring Applications. US EPA,
+  EPA/600/R-20/280.</li>
+<li>Duvall, R. M., Clements, A. L., Hagler, G., et al. (2021b). Performance
+  Testing Protocols, Metrics, and Target Values for Ozone Air Sensors: Use
+  in Ambient, Outdoor, Fixed Site, Non-Regulatory Supplemental and
+  Informational Monitoring Applications. US EPA, EPA/600/R-20/279.</li>
+<li>Frost, C., Thompson, S. G. (2000). Correcting for regression dilution
+  bias: comparison of methods for a single predictor variable. <em>Journal of
+  the Royal Statistical Society A</em> 163(2), 173–189.</li>
+<li>Fuller, W. A. (1987). <em>Measurement Error Models</em>. Wiley.</li>
+<li>Hutcheon, J. A., Chiolero, A., Hanley, J. A. (2010). Random measurement
+  error and regression dilution bias. <em>BMJ</em> 340, c2289.
+  doi:10.1136/bmj.c2289</li>
+<li>Linnet, K. (1993). Evaluation of regression procedures for methods
+  comparison studies. <em>Clinical Chemistry</em> 39(3), 424–432.</li>
+<li>US EPA (2022). Enhanced Air Sensor Guidebook. EPA/600/R-22/213.</li>
+<li>Wehr, R., Saleska, S. R. (2017). The long-solved problem of the best-fit
+  straight line: application to isotopic mixing lines. <em>Biogeosciences</em> 14,
+  17–29. doi:10.5194/bg-14-17-2017</li>
+<li>Williams, R., Kilaru, V., Snyder, E., et al. (2014). Air Sensor
+  Guidebook. US EPA, EPA/600/R-14/159.</li>
+<li>York, D., Evensen, N. M., Martínez, M. L., De Basabe Delgado, J. (2004).
+  Unified equations for the slope, intercept, and standard errors of the
+  best straight line. <em>American Journal of Physics</em> 72(3), 367–375.
+  doi:10.1119/1.1632486</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.top", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
