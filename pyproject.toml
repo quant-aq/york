@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.25,<1.32"]
+requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
@@ -66,8 +66,10 @@ docs = ["mkdocs-material>=9.5", "mkdocstrings[python]>=0.25"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/york"]
+core-metadata-version = "2.4"
 
 [tool.hatch.build.targets.sdist]
+core-metadata-version = "2.4"
 include = ["src/york", "tests", "examples", "SPEC.md", "README.md", "LICENSE"]
 
 [tool.pytest.ini_options]
