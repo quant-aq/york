@@ -8,8 +8,13 @@
 name: Release
 
 on:
+  # Fires when a v* tag is pushed, including the tag GitHub creates when a
+  # release is cut from the Releases UI.
   push:
-    tags: ["v*"]
+    tags: ["*"]
+  # Manual fallback: Actions -> Release -> "Run workflow", and pick the tag
+  # (or branch) to build from in the "Use workflow from" dropdown.
+  workflow_dispatch:
 
 jobs:
   build:
