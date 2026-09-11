@@ -5,33 +5,33 @@
 #   owner: <github owner>, repository: york,
 #   workflow: release.yml  (bare filename, not the path),
 #   environment: pypi
-# name: Release
+name: Release
 
-# on:
-#   push:
-#     tags: ["v*"]
+on:
+  push:
+    tags: ["v*"]
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v4
-#       - uses: astral-sh/setup-uv@v5
-#       - run: uv build
-#       - uses: actions/upload-artifact@v4
-#         with:
-#           name: dist
-#           path: dist/
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
-#   publish:
-#     needs: build
-#     runs-on: ubuntu-latest
-#     environment: pypi
-#     permissions:
-#       id-token: write
-#     steps:
-#       - uses: actions/download-artifact@v4
-#         with:
-#           name: dist
-#           path: dist/
-#       - uses: pypa/gh-action-pypi-publish@release/v1
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
